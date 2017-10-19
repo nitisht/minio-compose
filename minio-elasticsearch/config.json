@@ -1,0 +1,28 @@
+{
+	"version": "19",
+	"credential": {
+		"accessKey": "minio",
+		"secretKey": "minio123"
+	},
+	"region": "us-east-1",
+	"browser": "on",
+	"logger": {
+		"console": {
+			"enable": true
+		},
+		"file": {
+			"enable": false,
+			"filename": ""
+		}
+	},
+	"notify": {
+		"elasticsearch": {
+			"1": {
+				"enable": true,
+				"format": "namespace",
+				"url": "http://elasticsearch:9200",
+				"index": "minio_index"
+			}
+		}
+	}
+}
