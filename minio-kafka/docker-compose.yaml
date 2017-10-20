@@ -26,3 +26,7 @@ services:
       chmod +x wait-for.sh;
       ./wait-for.sh kafka:9092 -- /usr/bin/docker-entrypoint.sh minio server /export;
       "
+      
+volumes:
+  minio-data:
+  minio-config:

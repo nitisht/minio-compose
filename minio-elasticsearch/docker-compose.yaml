@@ -6,7 +6,6 @@ services:
     environment:
       - "discovery.type=single-node"
       - "xpack.security.enabled=false"
-      - "xpack.monitoring.enabled=false"
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -17,6 +16,9 @@ services:
       - elasticsearch
     ports:
       - "9000:9000"
+    volumes:
+      - minio-data:/export
+      - minio-config:/root/.minio
     entrypoint: >
       /bin/sh -c "
       curl https://raw.githubusercontent.com/nitisht/minio-compose/master/wait-for.sh -o wait-for.sh;
@@ -24,4 +26,7 @@ services:
       chmod +x wait-for.sh;
       ./wait-for.sh elasticsearch:9200 -- /usr/bin/docker-entrypoint.sh minio server /export;
       "
-  
+
+volumes:
+  minio-data:
+  minio-config:
