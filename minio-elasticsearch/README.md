@@ -1,4 +1,4 @@
-# minio-kafka
+# minio-elasticsearch
 
 Setup Minio + Elasticsearch for testing bucket notifications.
 
@@ -7,9 +7,9 @@ Setup Minio + Elasticsearch for testing bucket notifications.
 - docker-compose installed (1.8.0)
 
 ## Setup Minio and Elasticsearch with docker-compose
-We'll use docker-compose to set up Minio and Elasticsearch containers. Download the [docker-compose.yml](./docker-compose.yaml) file in your working directory. This docker-compose file declares two containers. 
+We'll use docker-compose to set up Minio and Elasticsearch containers. Download the [docker-compose.yml](./docker-compose.yaml) file in your working directory. This docker-compose file declares two containers.
 
-First one, `elasticsearch` runs office image. It exposes itself under `elasticsearch` hostname, with two environment variables set:
+First one, `elasticsearch` runs official image. It exposes itself under `elasticsearch` hostname, with two environment variables set:
 
 ```
 discovery.type=single-node
@@ -50,13 +50,13 @@ mc mb myminio/test
 ```
 
 #### Set up notifications
-Below event will notify Kafka of any object being created, accessed, or deleted from `test` bucket. 
+Below event will notify Elasticsearch of any object being created, accessed, or deleted from `test` bucket. 
 
 ```sh
 mc events add myminio/test arn:minio:sqs:us-east-1:1:elasticsearch
 ```
 #### Upload an object
-Let's upload an object to `test` bucket and see if we get the notifications in Kafka.
+Let's upload an object to `test` bucket and see if we get the notifications in Elasticsearch.
 
 ```sh
 mc cp ./testfile myminio/test/testfile
