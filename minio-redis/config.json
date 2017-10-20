@@ -1,0 +1,29 @@
+{
+	"version": "19",
+	"credential": {
+		"accessKey": "minio",
+		"secretKey": "minio123"
+	},
+	"region": "us-east-1",
+	"browser": "on",
+	"logger": {
+		"console": {
+			"enable": true
+		},
+		"file": {
+			"enable": false,
+			"filename": ""
+		}
+	},
+	"notify": {
+		"redis": {
+			"1": {
+				"enable": true,
+				"format": "namespace",
+				"address": "redis_db:6379",
+				"password": "yoursecret",
+				"key": "minio_key"
+			}
+		}
+	}
+}

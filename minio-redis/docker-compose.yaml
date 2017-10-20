@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+  redis_db:
+    image: redis
+    ports:
+      - "6379:6379"
+    environment:
+        REDIS_PASS_FILE: /run/secrets/redis-pass
+    volumes:
+      - './secret:/run/secrets/redis-pass'
+    command: [
+      "bash", "-c",
+      '
+       docker-entrypoint.sh
+       --requirepass "$$(cat $$REDIS_PASS_FILE)"
+      '
+    ]
+
+  minio:
+    image: minio/minio
+    depends_on:
+      - redis_db
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio-data:/export
+      - minio-config:/root/.minio
+    entrypoint: >
+      /bin/sh -c "
+      curl https://raw.githubusercontent.com/nitisht/minio-compose/master/wait-for.sh -o wait-for.sh;
+      curl https://raw.githubusercontent.com/nitisht/minio-compose/master/minio-redis/config.json -o /root/.minio/config.json;
+      chmod +x wait-for.sh;
+      ./wait-for.sh redis_db:6379 -- /usr/bin/docker-entrypoint.sh minio server /export;
+      "
+
+volumes:
+  minio-data:
+  minio-config:
