@@ -1,0 +1,39 @@
+{
+	"version": "19",
+	"credential": {
+		"accessKey": "minio",
+		"secretKey": "minio123"
+	},
+	"region": "us-east-1",
+	"browser": "on",
+	"logger": {
+		"console": {
+			"enable": true
+		},
+		"file": {
+			"enable": false,
+			"filename": ""
+		}
+	},
+	"notify": {
+		"nats": {
+			"1": {
+				"enable": true,
+				"address": "nats:4222",
+				"subject": "minio_events",
+				"username": "user",
+				"password": "password",
+				"token": "",
+				"secure": false,
+				"pingInterval": 0,
+				"streaming": {
+					"enable": false,
+					"clusterID": "",
+					"clientID": "",
+					"async": false,
+					"maxPubAcksInflight": 0
+				}
+			}
+		}
+	}
+}

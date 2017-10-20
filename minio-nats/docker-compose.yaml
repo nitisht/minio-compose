@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  nats:
+    image: nats
+    entrypoint: "/gnatsd -DV --user user --pass password"
+    ports:
+      - "8222:8222"
+      - "4222:4222"
+
+  minio:
+    image: minio/minio
+    depends_on:
+      - nats
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio-data:/export
+      - minio-config:/root/.minio
+    entrypoint: >
+      /bin/sh -c "
+      curl https://raw.githubusercontent.com/nitisht/minio-compose/master/wait-for.sh -o wait-for.sh;
+      curl https://raw.githubusercontent.com/nitisht/minio-compose/master/minio-nats/config.json -o /root/.minio/config.json;
+      chmod +x wait-for.sh;
+      ./wait-for.sh nats:4222 -- /usr/bin/docker-entrypoint.sh minio server /export;
+      "
+
+volumes:
+  minio-data:
+  minio-config:
