@@ -1,0 +1,31 @@
+{
+	"version": "19",
+	"credential": {
+		"accessKey": "minio",
+		"secretKey": "minio123"
+	},
+	"region": "us-east-1",
+	"browser": "on",
+	"logger": {
+		"console": {
+			"enable": true
+		},
+		"file": {
+			"enable": false,
+			"filename": ""
+		}
+	},
+	"notify": {
+		"mqtt": {
+			"1": {
+				"enable": true,
+				"broker": "tcp://mqtt:1883",
+				"topic": "minio_events",
+				"qos": 1,
+				"clientId": "minio",
+				"username": "",
+				"password": ""
+			}
+		}		
+	}
+}

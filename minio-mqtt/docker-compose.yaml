@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  mqtt:
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+
+  minio:
+    image: minio/minio
+    depends_on:
+      - mqtt
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio-data:/export
+      - minio-config:/root/.minio
+    entrypoint: >
+      /bin/sh -c "
+      curl https://raw.githubusercontent.com/nitisht/minio-compose/master/wait-for.sh -o wait-for.sh;
+      curl https://raw.githubusercontent.com/nitisht/minio-compose/master/minio-mqtt/config.json -o /root/.minio/config.json;
+      chmod +x wait-for.sh;
+      ./wait-for.sh mqtt:1883 -- /usr/bin/docker-entrypoint.sh minio server /export;
+      "
+
+volumes:
+  minio-data:
+  minio-config:

@@ -7,4 +7,5 @@ Currently these are the working examples:
 - [minio-elasticsearch](./minio-elasticsearch/README.md)
 - [minio-redis](./minio-redis/README.md)
 - [minio-nats](./minio-nats/README.md)
+- [minio-mqtt](./minio-mqtt/README.md)
 
